@@ -1,0 +1,14 @@
+modelName: NVIDIA A100-SXM4-40GB
+driverVersion: "535.104.12"
+port: 9400
+number: 8
+workloads:
+- podName: test-pod1
+  namespace: foo
+  gpus: 1
+- podName: test-pod2
+  namespace: bar
+  gpus: 4
+- podName: test-pod3
+  namespace: baz
+  gpus: 4
