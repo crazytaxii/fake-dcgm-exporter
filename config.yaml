@@ -11,4 +11,4 @@ workloads:
   gpus: 4
 - podName: test-pod3
   namespace: baz
-  gpus: 4
+  gpus: 3
