@@ -6,8 +6,7 @@ metadata:
   namespace: monitoring
 data:
   config.yaml: |
-    modelName: NVIDIA A100-SXM4-40GB
-    driverVersion: "535.104.12"
+    model: "A100"
     port: 9400
     number: 8
 
@@ -60,7 +59,7 @@ spec:
             path: /health
             port: 9400
             scheme: HTTP
-          initialDelaySeconds: 15
+          initialDelaySeconds: 10
           periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 1
@@ -70,7 +69,7 @@ spec:
             path: /health
             port: 9400
             scheme: HTTP
-          initialDelaySeconds: 15
+          initialDelaySeconds: 10
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 1

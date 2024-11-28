@@ -1,5 +1,4 @@
-modelName: NVIDIA A100-SXM4-40GB
-driverVersion: "535.104.12"
+model: "A100"
 port: 9400
 number: 8
 workloads:

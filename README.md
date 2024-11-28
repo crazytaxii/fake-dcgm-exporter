@@ -2,9 +2,16 @@
 
 A simulated [DCGM Exporter](https://github.com/NVIDIA/dcgm-exporter) provides fake metrics when development environment doesn't have any NVIDIA GPU sometimes.
 
+The fake-dcgm-exporter simulates **8** *A100-SXM4-40GB* or *GeForce RTX 4090* **NVIDIA** GPUs with builtin driver version and hardware data.
+
+The fake-dcgm-exporter supports 2 types of **NVIDIA** GPU:
+
+- A100-SXM4-40GB(**default**): `A100` in configuration
+- GeForce RTX 4090: `RTX4090` in configuration
+
 ## Quickstart on Kubernetes
 
-Modify the configuration file according to your requirements. The fake-dcgm-exporter will simulate **8** *NVIDIA A100-SXM4-40GB* GPUs with driver version *535.104.12* by default.
+Modify the configuration file according to your requirements.
 
 Deploy with:
 

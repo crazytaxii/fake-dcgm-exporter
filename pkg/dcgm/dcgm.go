@@ -1,9 +1,7 @@
 package dcgm
 
 const (
-	defaultDriverVersion = "535.104.12"
-	defaultModelName     = "NVIDIA A100-SXM4-40GB"
-	defaultGPUsNumber    = 8
+	defaultGPUsNumber = 8
 )
 
 type Workload struct {
@@ -14,11 +12,9 @@ type Workload struct {
 }
 
 type GPUInfo struct {
-	Hostname      string
-	ExporterPod   string // exporter Pod name
-	ModelName     string `yaml:"modelName,omitempty"`
-	DriverVersion string `yaml:"driverVersion,omitempty"`
-	Number        uint32 `yaml:"number,omitempty"` // number of GPUs: default 8
+	Model    NvidiaGPUModel `yaml:"model,omitempty"`
+	Hostname string
+	Number   uint32 `yaml:"number,omitempty"` // number of GPUs: default 8
 }
 
 type FakeGPUConfig struct {
@@ -27,14 +23,12 @@ type FakeGPUConfig struct {
 }
 
 // exporterPod is the exporter Pod name
-func DefaultGPUConfig(hostname, exporterPod string) *FakeGPUConfig {
+func DefaultGPUConfig(hostname string) *FakeGPUConfig {
 	return &FakeGPUConfig{
 		GPUInfo: &GPUInfo{
-			Hostname:      hostname,
-			ExporterPod:   exporterPod,
-			ModelName:     defaultModelName,
-			DriverVersion: defaultDriverVersion,
-			Number:        defaultGPUsNumber,
+			Hostname: hostname,
+			Number:   defaultGPUsNumber,
+			Model:    ModelA100, // NVIDIA A100-SXM4-40GB by default
 		},
 	}
 }

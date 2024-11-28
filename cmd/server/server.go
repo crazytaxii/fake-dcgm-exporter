@@ -34,7 +34,7 @@ func Run(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("failed to get hostname: %w", err)
 	}
-	cfg, err := LoadConfig(defaultConfigPath, cmp.Or(os.Getenv("NODE_NAME"), hostname), os.Getenv("POD_NAME"))
+	cfg, err := LoadConfig(defaultConfigPath, cmp.Or(os.Getenv("NODE_NAME"), hostname))
 	if err != nil {
 		return fmt.Errorf("failed to load config: %w", err)
 	}

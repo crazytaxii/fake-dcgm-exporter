@@ -3,8 +3,9 @@ package server
 import (
 	"os"
 
-	"github.com/crazytaxii/fake-dcgm-exporter/pkg/dcgm"
 	"gopkg.in/yaml.v3"
+
+	"github.com/crazytaxii/fake-dcgm-exporter/pkg/dcgm"
 )
 
 const (
@@ -17,15 +18,15 @@ type Config struct {
 	*dcgm.FakeGPUConfig `yaml:",inline"`
 }
 
-func DefaultConfig(nodeName, exporterPod string) *Config {
+func DefaultConfig(nodeName string) *Config {
 	return &Config{
 		Port:          defaultPort,
-		FakeGPUConfig: dcgm.DefaultGPUConfig(nodeName, exporterPod),
+		FakeGPUConfig: dcgm.DefaultGPUConfig(nodeName),
 	}
 }
 
-func LoadConfig(path, nodeName, exporterPod string) (*Config, error) {
-	cfg := DefaultConfig(nodeName, exporterPod)
+func LoadConfig(path, nodeName string) (*Config, error) {
+	cfg := DefaultConfig(nodeName)
 	data, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
