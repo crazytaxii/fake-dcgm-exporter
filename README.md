@@ -17,9 +17,6 @@ Test with:
 ```bash
 $ SERVICE_IP=$(kubectl get svc -n monitoring dcgm-exporter -o jsonpath='{.spec.clusterIP}')
 $ curl http://${SERVICE_IP}:9400/metrics
-
-# or enable gzip compressed
-$ curl --compressed http://${SERVICE_IP}:9400/metrics
 ```
 
 ## Quickstart on Docker
@@ -38,7 +35,4 @@ Test with:
 
 ```bash
 $ curl http://127.0.0.1:9400/metrics
-
-# or enable gzip compressed
-$ curl --compressed http://127.0.0.1:9400/metrics
 ```

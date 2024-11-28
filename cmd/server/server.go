@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/prometheus/common/expfmt"
 	"github.com/spf13/cobra"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/manager/signals"
@@ -88,25 +89,21 @@ func (s *MetricsServer) Stop(ctx context.Context) error {
 }
 
 func (s *MetricsServer) handleMetrics(w http.ResponseWriter, r *http.Request) {
-	compressed := r.Header.Get("Accept-Encoding") == "gzip"
-	data, err := s.metricsProvider.Render(compressed)
+	data, err := s.metricsProvider.Render()
 	if err != nil {
 		klog.Errorf("failed to render fake metrics: %v", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	w.Header().Set("Content-Length", strconv.Itoa(len(data)))
-	if compressed {
-		w.Header().Set("Content-Encoding", "gzip")
-	} else {
-		w.Header().Set("Content-Type", "text/plain")
-	}
+	w.Header().Set("Content-Type", string(expfmt.Negotiate(r.Header)))
+	w.WriteHeader(http.StatusOK)
 	if _, err := w.Write(data); err != nil {
 		klog.Errorf("failed to send response: %v", err)
 	}
 }
 
 func health(w http.ResponseWriter, r *http.Request) {
-	_, _ = w.Write([]byte("OK"))
 	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte("OK"))
 }

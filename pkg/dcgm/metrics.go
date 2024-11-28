@@ -3,7 +3,6 @@ package dcgm
 import (
 	"bytes"
 	"cmp"
-	"compress/gzip"
 	"fmt"
 	"text/template"
 
@@ -38,13 +37,13 @@ func NewGPUMetricsRenderer(cfg *FakeGPUConfig) (*MetricsRenderer, error) {
 	}, nil
 }
 
-func (r *MetricsRenderer) Render(compressed bool) ([]byte, error) {
+func (r *MetricsRenderer) Render() ([]byte, error) {
 	// gpusMetrics is the list of fake GPU metrics
 	// length of the list equals to the number of GPUs
 	gpusMetrics := make([]*FakeGPUMetrics, r.gpuInfo.Number)
 	for i := range gpusMetrics {
 		gpusMetrics[i] = &FakeGPUMetrics{
-			UUID:          uuid.NewMD5(uuid.NameSpaceURL, []byte(fmt.Sprintf("nvidia%d", i))).String(), // generate stable UUID
+			UUID:          uuid.NewMD5(uuid.NameSpaceURL, []byte(fmt.Sprintf("%s-nvidia%d", r.gpuInfo.Hostname, i))).String(), // generate stable UUID
 			Hostname:      r.gpuInfo.Hostname,
 			ModelName:     r.gpuInfo.ModelName,
 			DriverVersion: r.gpuInfo.DriverVersion,
@@ -65,17 +64,8 @@ func (r *MetricsRenderer) Render(compressed bool) ([]byte, error) {
 	}
 
 	buf := &bytes.Buffer{}
-	var err error
-	if !compressed {
-		err = r.tmpl.Execute(buf, gpusMetrics)
-	} else {
-		gw := gzip.NewWriter(buf)
-		err = r.tmpl.Execute(gw, gpusMetrics)
-	}
-	if err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
+	err := r.tmpl.Execute(buf, gpusMetrics)
+	return buf.Bytes(), err
 }
 
 const metricsTemplate = `# HELP DCGM_FI_DEV_SM_CLOCK SM clock frequency (in MHz).
