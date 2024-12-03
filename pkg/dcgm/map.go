@@ -7,6 +7,7 @@ type NvidiaGPUModel string
 const (
 	ModelRTX4090 NvidiaGPUModel = "RTX4090"
 	ModelA100    NvidiaGPUModel = "A100"
+	ModelA800    NvidiaGPUModel = "A800"
 )
 
 type GPUStandard struct {
@@ -28,6 +29,12 @@ var GPUMap = map[NvidiaGPUModel]GPUStandard{
 		ModelName:              "NVIDIA A100-SXM4-40GB",
 		FrameBufferMemoryTotal: 40338.0,
 		FreeTemperature:        29.0,
+	},
+	ModelA800: {
+		DriverVersion:          "535.161.08",
+		ModelName:              "NVIDIA A800-SXM4-80GB",
+		FrameBufferMemoryTotal: 81228.0,
+		FreeTemperature:        36.0,
 	},
 	// Add more GPUs here
 }
