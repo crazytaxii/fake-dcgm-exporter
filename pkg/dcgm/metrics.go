@@ -78,7 +78,7 @@ func (r *MetricsRenderer) Render() ([]byte, error) {
 const metricsTemplate = `# HELP DCGM_FI_DEV_SM_CLOCK SM clock frequency (in MHz).
 # TYPE DCGM_FI_DEV_SM_CLOCK gauge
 {{- range $i, $metrics := . }}
-DCGM_FI_DEV_SM_CLOCK{gpu="{{ $i }}",UUID="{{ $metrics.UUID }}",device="{{ $metrics.DeviceName }}",modelName="{{ $metrics.ModelName }}",Hostname="{{ $metrics.Hostname }}",DCGM_FI_DRIVER_VERSION="{{ $metrics.DriverVersion }}",container="{{ $metrics.ContainerName }}",namespace="{{ $metrics.PodNamespace }}",pod="{{ $metrics.PodName }}"} 210
+DCGM_FI_DEV_SM_CLOCK{gpu="{{ $i }}",UUID="{{ $metrics.UUID }}",device="{{ $metrics.DeviceName }}",modelName="{{ $metrics.ModelName }}",Hostname="{{ $metrics.Hostname }}",DCGM_FI_DRIVER_VERSION="{{ $metrics.DriverVersion }}",container="{{ $metrics.ContainerName }}",namespace="{{ $metrics.PodNamespace }}",pod="{{ $metrics.PodName }}"} {{ $metrics.SMClock }}
 {{- end }}
 # HELP DCGM_FI_DEV_MEM_CLOCK Memory clock frequency (in MHz).
 # TYPE DCGM_FI_DEV_MEM_CLOCK gauge

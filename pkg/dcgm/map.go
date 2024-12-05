@@ -15,6 +15,7 @@ type GPUStandard struct {
 	ModelName              string
 	FrameBufferMemoryTotal float64 // DCGM_FI_DEV_FB_USED + DCGM_FI_DEV_FB_FREE
 	FreeTemperature        float64 // temperature in free status
+	SMClock                float64 // SM clock frequency in free status
 }
 
 var GPUMap = map[NvidiaGPUModel]GPUStandard{
@@ -23,18 +24,21 @@ var GPUMap = map[NvidiaGPUModel]GPUStandard{
 		ModelName:              "NVIDIA GeForce RTX 4090",
 		FrameBufferMemoryTotal: 24216.0,
 		FreeTemperature:        29.0,
+		SMClock:                210.0,
 	},
 	ModelA100: {
 		DriverVersion:          "535.104.12",
 		ModelName:              "NVIDIA A100-SXM4-40GB",
 		FrameBufferMemoryTotal: 40338.0,
 		FreeTemperature:        29.0,
+		SMClock:                210.0,
 	},
 	ModelA800: {
 		DriverVersion:          "535.161.08",
 		ModelName:              "NVIDIA A800-SXM4-80GB",
 		FrameBufferMemoryTotal: 81228.0,
 		FreeTemperature:        36.0,
+		SMClock:                210.0,
 	},
 	// Add more GPUs here
 }
